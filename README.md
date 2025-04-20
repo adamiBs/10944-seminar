@@ -11,14 +11,14 @@
 ## Running Each Normalization Script
 To run the original visualization script:
   ```
-  uv run scripts/original_visualization.py
+  uv run ./scripts/1-original_visualization.py
   ```
 
 ![Original](./images/1-original_visualization.png)
 
 To run the Z-score normalization script:
   ```
-  uv run scripts/zscore_normalization.py
+  uv run ./scripts/2-zscore_normalization.py
   ```
 
 ![Z-Score](./images/2-zscore_normalization.png)
@@ -26,28 +26,28 @@ To run the Z-score normalization script:
 
 To run the Min-Max normalization script:
   ```
-  uv run scripts/minmax_normalization.py
+  uv run ./scripts/3-minmax_normalization.py
   ```
 
 ![Mini-max](./images/3-minmax_normalization.png)
 
 To run the PCA whitening script:
   ```
-  uv run scripts/pca_whitening.py
+  uv run ./scripts/4-pca_whitening.py
   ```
 
 ![Whitening](./images/4-pca_whitening.png)
 
 To run the per-sample normalization script:
   ```
-  uv run scripts/sample_normalization.py
+  uv run scripts/5-1-sample_normalization.py
   ```
 
 ![per-sample](./images/5-1-per_feature_normalization.png)
 
 To run the per-feature normalization script:
   ```
-  uv run scripts/feature_normalization.py
+  uv run scripts/5-2-feature_normalization.py
   ```
 
 ![per-feature](./images/5-2-per_sample_normalization.png)
