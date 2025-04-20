@@ -1,4 +1,5 @@
 {
   "name": "Normalization Project",
   "dockerFile": "Dockerfile",
+  "postStartCommand": "uv sync"
 }
