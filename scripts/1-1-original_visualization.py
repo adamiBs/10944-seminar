@@ -7,7 +7,7 @@ from utils.common import load_iris_dataset, visualize_3d_scatter
 data, feature_names, target = load_iris_dataset()
 
 # Visualize original data in 3D
-output_path = "/workspaces/10944-seminar/images/1-original_visualization.png"
+output_path = "/workspaces/10944-seminar/images/1-1-original_visualization.png"
 visualize_3d_scatter(
     data=data,
     target=target,

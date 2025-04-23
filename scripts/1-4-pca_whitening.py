@@ -12,7 +12,7 @@ pca = PCA(whiten=True)
 data_white = pca.fit_transform(data)
 
 # Visualize PCA whitened data in 3D
-output_path = "/workspaces/10944-seminar/images/4-pca_whitening.png"
+output_path = "/workspaces/10944-seminar/images/1-4-pca_whitening.png"
 visualize_3d_scatter(
     data=data_white,
     target=target,

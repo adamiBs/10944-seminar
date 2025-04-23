@@ -3,10 +3,11 @@ name = "10944-seminar"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
     "matplotlib>=3.10.1",
-    "numpy>=2.2.5",
     "scikit-learn>=1.6.1",
+    "tensorflow>=2.19.0",
+    "umap-learn>=0.5.7",
     "utils>=1.0.2",
 ]

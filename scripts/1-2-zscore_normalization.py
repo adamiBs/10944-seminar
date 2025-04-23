@@ -12,7 +12,7 @@ scaler_z = StandardScaler()
 data_zscore = scaler_z.fit_transform(data)
 
 # Visualize Z-score normalized data in 3D
-output_path = "/workspaces/10944-seminar/images/2-zscore_normalization.png"
+output_path = "/workspaces/10944-seminar/images/1-2-zscore_normalization.png"
 visualize_3d_scatter(
     data=data_zscore,
     target=target,

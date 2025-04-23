@@ -12,7 +12,7 @@ scaler_mm = MinMaxScaler()
 data_minmax = scaler_mm.fit_transform(data)
 
 # Visualize min-max normalized data in 3D
-output_path = "/workspaces/10944-seminar/images/3-minmax_normalization.png"
+output_path = "/workspaces/10944-seminar/images/1-3-minmax_normalization.png"
 visualize_3d_scatter(
     data=data_minmax,
     target=target,

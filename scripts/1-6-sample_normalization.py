@@ -11,7 +11,7 @@ data, feature_names, target = load_iris_dataset()
 data_norm_sample = normalize(data, norm='l2', axis=1)
 
 # Visualize per-sample normalized data in 3D
-output_path = "/workspaces/10944-seminar/images/5-2-per_sample_normalization.png"
+output_path = "/workspaces/10944-seminar/images/1-6-per_sample_normalization.png"
 visualize_3d_scatter(
     data=data_norm_sample,
     target=target,
