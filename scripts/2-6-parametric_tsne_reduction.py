@@ -8,12 +8,11 @@ from utils.common import load_iris_dataset, visualize_3d_scatter
 # Load iris dataset
 data, feature_names, target = load_iris_dataset()
 
-# Normalize data
-scaler = StandardScaler()
-data_scaled = scaler.fit_transform(data)
+# Use data as is without normalization
+data_scaled = data
 
 # Generate t-SNE embedding as targets
-tsne = TSNE(n_components=3, perplexity=30, random_state=42)
+tsne = TSNE(n_components=2, perplexity=30, random_state=42)
 tsne_embedding = tsne.fit_transform(data_scaled)
 
 # Create parametric t-SNE model
@@ -24,7 +23,7 @@ class ParametricTSNE(tf.keras.Model):
             tf.keras.layers.Dense(16, activation='relu'),
             tf.keras.layers.Dense(12, activation='relu'),
             tf.keras.layers.Dense(8, activation='relu'),
-            tf.keras.layers.Dense(3)  # Output 3D embedding
+            tf.keras.layers.Dense(2)  # Output 2D embedding
         ])
         
     def call(self, inputs):
@@ -51,12 +50,15 @@ history = model.fit(
 # Generate embeddings with trained model
 parametric_tsne_embedding = model.predict(X_train)
 
+# Add zero column for 3D visualization
+parametric_tsne_embedding_3d = np.column_stack((parametric_tsne_embedding, np.zeros(len(parametric_tsne_embedding))))
+
 # Visualize parametric t-SNE embeddings in 3D
 output_path = "/workspaces/10944-seminar/images/2-6-parametric_tsne_reduction.png"
 visualize_3d_scatter(
-    data=parametric_tsne_embedding, 
+    data=parametric_tsne_embedding_3d, 
     target=target,
-    title="Parametric t-SNE - Iris Dataset (3D Visualization)",
+    title="Parametric t-SNE - Iris Dataset (2D → 3D Visualization)",
     save_path=output_path,
     features_to_use=[0, 1, 2]
 )

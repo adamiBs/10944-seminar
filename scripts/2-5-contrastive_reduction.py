@@ -7,9 +7,9 @@ from utils.common import load_iris_dataset, visualize_3d_scatter
 # Load iris dataset
 data, feature_names, target = load_iris_dataset()
 
-# Normalize data
-scaler = StandardScaler()
-data_scaled = scaler.fit_transform(data)
+# Use data as is without normalization
+data_scaled = data
+
 
 # Define augmentation function
 def augment(x):
@@ -18,7 +18,7 @@ def augment(x):
 
 # Create contrastive learning model
 class ContrastiveModel(tf.keras.Model):
-    def __init__(self, embedding_size=3):
+    def __init__(self, embedding_size=2):
         super().__init__()
         self.embedding_size = embedding_size
         self.encoder = tf.keras.Sequential([
@@ -54,7 +54,7 @@ def contrastive_loss(projections_1, projections_2, temperature=0.1):
     return loss
 
 # Training setup
-model = ContrastiveModel(embedding_size=3)
+model = ContrastiveModel(embedding_size=2)
 optimizer = tf.keras.optimizers.Adam(0.001)
 batch_size = 32
 
@@ -86,12 +86,15 @@ for epoch in range(epochs):
 embeddings, _ = model(tf.convert_to_tensor(data_scaled, dtype=tf.float32))
 data_contrastive = embeddings.numpy()
 
+# Add zero column for 3D visualization
+data_contrastive_3d = np.column_stack((data_contrastive, np.zeros(len(data_contrastive))))
+
 # Visualize contrastive learning embeddings in 3D
 output_path = "/workspaces/10944-seminar/images/2-5-contrastive_reduction.png"
 visualize_3d_scatter(
-    data=data_contrastive, 
+    data=data_contrastive_3d, 
     target=target,
-    title="Contrastive Learning - Iris Dataset (3D Visualization)",
+    title="Contrastive Learning - Iris Dataset (2D → 3D Visualization)",
     save_path=output_path,
     features_to_use=[0, 1, 2]
 )
