@@ -43,7 +43,7 @@ plt.close()
 data_pca_3d = np.column_stack((data_pca, np.zeros(len(data_pca))))
 
 # Visualize PCA reduced data in 3D
-output_path = "/workspaces/10944-seminar/images/3-1-zscore_pca.png"
+output_path = "/workspaces/10944-seminar/images/3-1-zscore_pca_3d.png"
 visualize_3d_scatter(
     data=data_pca_3d, 
     target=target,
