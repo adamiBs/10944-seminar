@@ -1,6 +1,6 @@
 # 10944 Seminar
 
-## The effect of normilization on dimensionality reduction
+## The effect of normalization on dimensionality reduction
 
 ## Setting Up the Development Environment
 1. Open the project in VS Code.
@@ -8,148 +8,81 @@
 3. Install Docker
 4. Reopen the project in the container by selecting "Reopen in Container" from the command palette.
 
-## Running Each Normalization Script
-To run the original visualization script:
-  ```
-  uv run ./scripts/1-1-original_visualization.py
-  ```
+## Project Visualizations
 
-![Original](./images/1-1-original_visualization.png)
+### 1. Normalization Techniques
 
-To run the Z-score normalization script:
-  ```
-  uv run ./scripts/1-2-zscore_normalization.py
-  ```
+| Technique | Visualization |
+|-----------|---------------|
+| Original Data | ![Original](./images/1-1-original_visualization.png) |
+| Z-Score Normalization | ![Z-Score](./images/1-4-zscore_normalization.png) |
+| Min-Max Normalization | ![Min-Max](./images/1-5-minmax_normalization.png) |
+| Per-Sample Normalization | ![Per-Sample](./images/1-3-per_sample_normalization.png) |
+| Per-Feature Normalization | ![Per-Feature](./images/1-5-per_feature_normalization.png) |
 
-![Z-Score](./images/1-2-zscore_normalization.png)
+### 2. Dimensionality Reduction Techniques
 
+| Technique | 2D Visualization | 3D Visualization |
+|-----------|------------------|------------------|
+| PCA | ![PCA 2D](./images/2-1-pca_reduction_2d.png) | ![PCA 3D](./images/2-1-pca_reduction_3d.png) |
+| t-SNE | ![t-SNE 2D](./images/2-2-tsne_reduction_2d.png) | ![t-SNE 3D](./images/2-2-tsne_reduction_3d.png) |
+| UMAP | ![UMAP](./images/2-3-umap_reduction.png) | - |
+| Autoencoder | ![Autoencoder](./images/2-4-autoencoder_reduction.png) | - |
+| Contrastive Learning | ![Contrastive](./images/2-5-contrastive_reduction.png) | - |
+| Parametric t-SNE | ![Parametric t-SNE](./images/2-6-parametric_tsne_reduction.png) | - |
 
-To run the Min-Max normalization script:
-  ```
-  uv run ./scripts/1-3-minmax_normalization.py
-  ```
+### 3. Wine Dataset: Combined Normalization and Dimensionality Reduction 
 
-![Mini-max](./images/1-3-minmax_normalization.png)
+#### 3.1 Raw vs Z-Score PCA
+| Processing | 2D | 3D |
+|------------|-----|-----|
+| Raw PCA | ![Raw PCA 2D](./images/3-1-raw_pca_wine_2d.png) | ![Raw PCA 3D](./images/3-1-raw_pca_wine_3d.png) |
+| Z-Score PCA | ![Z-Score PCA 2D](./images/3-1-zscore_pca_wine_2d.png) | ![Z-Score PCA 3D](./images/3-1-zscore_pca_wine_3d.png) |
 
-To run the PCA whitening script:
-  ```
-  uv run ./scripts/1-4-pca_whitening.py
-  ```
+#### 3.2 Raw vs Z-Score with PCA and t-SNE
+| Processing | PCA 2D | PCA 3D | t-SNE 2D | t-SNE 3D |
+|------------|--------|--------|----------|----------|
+| Raw | ![Raw PCA 2D](./images/3-2-raw_pca_wine_2d.png) | ![Raw PCA 3D](./images/3-2-raw_pca_wine_3d.png) | ![Raw t-SNE 2D](./images/3-2-raw_tsne_wine_2d.png) | ![Raw t-SNE 3D](./images/3-2-raw_tsne_wine_3d.png) |
+| Z-Score | ![Z-Score PCA 2D](./images/3-2-zscore_pca_wine_2d.png) | ![Z-Score PCA 3D](./images/3-2-zscore_pca_wine_3d.png) | ![Z-Score t-SNE 2D](./images/3-2-zscore_tsne_wine_2d.png) | ![Z-Score t-SNE 3D](./images/3-2-zscore_tsne_wine_3d.png) |
 
-![Whitening](./images/1-4-pca_whitening.png)
+#### 3.3 Raw vs Z-Score with PCA and UMAP
+| Processing | PCA 2D | PCA 3D | UMAP 2D | UMAP 3D |
+|------------|--------|--------|---------|---------|
+| Raw | ![Raw PCA 2D](./images/3-3-raw_pca_wine_2d.png) | ![Raw PCA 3D](./images/3-3-raw_pca_wine_3d.png) | ![Raw UMAP 2D](./images/3-3-raw_umap_wine_2d.png) | ![Raw UMAP 3D](./images/3-3-raw_umap_wine_3d.png) |
+| Z-Score | ![Z-Score PCA 2D](./images/3-3-zscore_pca_wine_2d.png) | ![Z-Score PCA 3D](./images/3-3-zscore_pca_wine_3d.png) | ![Z-Score UMAP 2D](./images/3-3-zscore_umap_wine_2d.png) | ![Z-Score UMAP 3D](./images/3-3-zscore_umap_wine_3d.png) |
 
-To run the per-sample normalization script:
-  ```
-  uv run scripts/1-5-sample_normalization.py
-  ```
+#### 3.4 Min-Max Normalization
+| Technique | Visualization |
+|-----------|---------------|
+| Min-Max PCA | ![Min-Max PCA 2D](./images/3-4-minmax_pca_wine_2d.png) |
+| Min-Max t-SNE | ![Min-Max t-SNE 2D](./images/3-4-minmax_tsne_wine_2d.png) |
 
-![per-sample](./images/1-5-per_feature_normalization.png)
+### 4. Autoencoder Experiments
 
-To run the per-feature normalization script:
-  ```
-  uv run scripts/1-6-feature_normalization.py
-  ```
+#### 4.1 MinMax Normalized Autoencoders with LeakyReLU(0.3) and Sigmoid
 
-![per-feature](./images/1-6-per_sample_normalization.png)
+| Loss Function | Model Visualization | Loss Plot | Sample Reconstruction |
+|---------------|---------------------|-----------|----------------------|
+| BCE | ![BCE Model](./images/4-autoencoder_minmax_leakyrelu03_sigmoid_bce.png) | ![BCE Loss](./images/4-autoencoder_minmax_leakyrelu03_sigmoid_bce_loss.png) | ![BCE Samples](./images/4-autoencoder_minmax_leakyrelu03_sigmoid_bce_samples.png) |
+| MSE | ![MSE Model](./images/4-autoencoder_minmax_leakyrelu03_sigmoid_mse.png) | ![MSE Loss](./images/4-autoencoder_minmax_leakyrelu03_sigmoid_mse_loss.png) | ![MSE Samples](./images/4-autoencoder_minmax_leakyrelu03_sigmoid_mse_samples.png) |
 
-------
+#### 4.2 MinMax Normalized Autoencoders with ReLU and Sigmoid
 
-## Dimensionality Reduction Techniques
+| Loss Function | Model Visualization | Loss Plot | Sample Reconstruction |
+|---------------|---------------------|-----------|----------------------|
+| BCE | ![BCE Model](./images/4-autoencoder_minmax_relu_sigmoid_bce.png) | ![BCE Loss](./images/4-autoencoder_minmax_relu_sigmoid_bce_loss.png) | ![BCE Samples](./images/4-autoencoder_minmax_relu_sigmoid_bce_samples.png) |
+| MSE | ![MSE Model](./images/4-autoencoder_minmax_relu_sigmoid_mse.png) | ![MSE Loss](./images/4-autoencoder_minmax_relu_sigmoid_mse_loss.png) | ![MSE Samples](./images/4-autoencoder_minmax_relu_sigmoid_mse_samples.png) |
 
-To run the PCA dimensionality reduction script:
-```
-uv run ./scripts/2-1-pca_reduction.py
-```
+#### 4.3 Z-Score Normalized Autoencoders with LeakyReLU(0.3) and Linear Activation
 
-![PCA](./images/2-1-pca_reduction_3d.png)
+| Loss Function | Model Visualization | Loss Plot | Sample Reconstruction |
+|---------------|---------------------|-----------|----------------------|
+| BCE | ![BCE Model](./images/4-autoencoder_zscore_leakyrelu03_linear_bce.png) | ![BCE Loss](./images/4-autoencoder_zscore_leakyrelu03_linear_bce_loss.png) | ![BCE Samples](./images/4-autoencoder_zscore_leakyrelu03_linear_bce_samples.png) |
+| MSE | ![MSE Model](./images/4-autoencoder_zscore_leakyrelu03_linear_mse.png) | ![MSE Loss](./images/4-autoencoder_zscore_leakyrelu03_linear_mse_loss.png) | ![MSE Samples](./images/4-autoencoder_zscore_leakyrelu03_linear_mse_samples.png) |
 
-To run the t-SNE dimensionality reduction script:
-```
-uv run ./scripts/2-2-tsne_reduction.py
-```
+#### 4.4 Z-Score Normalized Autoencoders with ReLU and Linear Activation
 
-![t-SNE](./images/2-2-tsne_reduction.png)
-
-To run the UMAP dimensionality reduction script:
-```
-uv run ./scripts/2-3-umap_reduction.py
-```
-
-![UMAP](./images/2-3-umap_reduction.png)
-
-To run the Autoencoder dimensionality reduction script:
-```
-uv run ./scripts/2-4-autoencoder_reduction.py
-```
-
-![Autoencoder](./images/2-4-autoencoder_reduction.png)
-
-To run the Contrastive Learning dimensionality reduction script:
-```
-uv run ./scripts/2-5-contrastive_reduction.py
-```
-
-![Contrastive](./images/2-5-contrastive_reduction.png)
-
-To run the Parametric t-SNE dimensionality reduction script:
-```
-uv run ./scripts/2-6-parametric_tsne_reduction.py
-```
-
-![Parametric t-SNE](./images/2-6-parametric_tsne_reduction.png)
-
-# Normalization and Dimensionality Reduction Combinations
-
-### Comparison of 3D and 2D Normalized PCA Visualizations
-
-| 3D Visualization | 2D Visualization |
-|-----------------|------------------|
-| ![Z-Score PCA 3D](./images/3-1-zscore_pca_3d.png) | ![Z-Score PCA 2D](./images/3-1-zscore_pca_2d.png) |
-| ![Min-Max PCA 3D](./images/3-2-minmax_pca_3d.png) | ![Min-Max PCA 2D](./images/3-2-minmax_pca_2d.png) |
-| ![Feature PCA 3D](./images/3-3-feature_pca_3d.png) | ![Feature PCA 2D](./images/3-3-feature_pca_2d.png) |
-| ![Sample PCA 3D](./images/3-4-smaple_pca_3d.png) | ![Sample PCA 2D](./images/3-4-smaple_pca_2d.png) |
-
-### Comparison of 3D and 2D Normalized t-SNE Visualizations
-
-| 3D Visualization | 2D Visualization |
-|-----------------|------------------|
-| ![Z-Score t-SNE 3D](./images/4-1-zscore_tsne_3d.png) | ![Z-Score t-SNE 2D](./images/4-1-zscore_tsne_2d.png) |
-| ![Min-Max t-SNE 3D](./images/4-2-minmax_tsne_3d.png) | ![Min-Max t-SNE 2D](./images/4-2-minmax_tsne_2d.png) |
-| ![Feature t-SNE 3D](./images/4-3-feature_tsne_3d.png) | ![Feature t-SNE 2D](./images/4-3-feature_tsne_2d.png) |
-| ![Sample t-SNE 3D](./images/4-4-sample_tsne_3d.png) | ![Sample t-SNE 2D](./images/4-4-sample_tsne_2d.png) |
-
-### Comparison of 3D and 2D Normalized UMAP Visualizations
-
-| 3D Visualization | 2D Visualization |
-|-----------------|------------------|
-| ![Z-Score UMAP 3D](./images/5-1-zscore_umap_3d.png) | ![Z-Score UMAP 2D](./images/5-1-zscore_umap_2d.png) |
-| ![Min-Max UMAP 3D](./images/5-2-minmax_umap_3d.png) | ![Min-Max UMAP 2D](./images/5-2-minmax_umap_2d.png) |
-| ![Feature UMAP 3D](./images/5-3-feature_umap_3d.png) | ![Feature UMAP 2D](./images/5-3-feature_umap_2d.png) |
-| ![Sample UMAP 3D](./images/5-4-sample_umap_3d.png) | ![Sample UMAP 2D](./images/5-4-sample_umap_2d.png) |
-
-### Comparison of 3D and 2D Normalized Autoencoder Visualizations
-
-| 3D Visualization | 2D Visualization |
-|-----------------|------------------|
-| ![Z-Score Autoencoder 3D](./images/6-1-zscore_autoencoder_3d.png) | ![Z-Score Autoencoder 2D](./images/6-1-zscore_autoencoder_2d.png) |
-| ![Min-Max Autoencoder 3D](./images/6-2-minmax_autoencoder_3d.png) | ![Min-Max Autoencoder 2D](./images/6-2-minmax_autoencoder_2d.png) |
-| ![Feature Autoencoder 3D](./images/6-3-feature_autoencoder_3d.png) | ![Feature Autoencoder 2D](./images/6-3-feature_autoencoder_2d.png) |
-| ![Sample Autoencoder 3D](./images/6-4-sample_autoencoder_3d.png) | ![Sample Autoencoder 2D](./images/6-4-sample_autoencoder_2d.png) |
-
-### Comparison of 3D and 2D Normalized Contrastive Learning Visualizations
-
-| 3D Visualization | 2D Visualization |
-|-----------------|------------------|
-| ![Z-Score Contrastive Learning 3D](./images/7-1-zscore_contrastive_3d.png) | ![Z-Score Contrastive Learning 2D](./images/7-1-zscore_contrastive_2d.png) |
-| ![Min-Max Contrastive Learning 3D](./images/7-2-minmax_contrastive_3d.png) | ![Min-Max Contrastive Learning 2D](./images/7-2-minmax_contrastive_2d.png) |
-| ![Feature Contrastive Learning 3D](./images/7-3-feature_contrastive_3d.png) | ![Feature Contrastive Learning 2D](./images/7-3-feature_contrastive_2d.png) |
-| ![Sample Contrastive Learning 3D](./images/7-4-sample_contrastive_3d.png) | ![Sample Contrastive Learning 2D](./images/7-4-sample_contrastive_2d.png) |
-
-### Comparison of 3D and 2D Parametric t-SNE Visualizations
-
-| 3D Visualization | 2D Visualization |
-|-----------------|------------------|
-| ![Z-Score Parametric t-SNE 3D](./images/8-1-zscore_parametric_tsne_3d.png) | ![Z-Score Parametric t-SNE 2D](./images/8-1-zscore_parametric_tsne_2d.png) |
-| ![Min-Max Parametric t-SNE 3D](./images/8-2-minmax_parametric_tsne_3d.png) | ![Min-Max Parametric t-SNE 2D](./images/8-2-minmax_parametric_tsne_2d.png) |
-| ![Feature Parametric t-SNE 3D](./images/8-3-feature_parametric_tsne_3d.png) | ![Feature Parametric t-SNE 2D](./images/8-3-feature_parametric_tsne_2d.png) |
-| ![Sample Parametric t-SNE 3D](./images/8-4-sample_parametric_tsne_3d.png) | ![Sample Parametric t-SNE 2D](./images/8-4-sample_parametric_tsne_2d.png) |
+| Loss Function | Model Visualization | Loss Plot | Sample Reconstruction |
+|---------------|---------------------|-----------|----------------------|
+| BCE | ![BCE Model](./images/4-autoencoder_zscore_relu_linear_bce.png) | ![BCE Loss](./images/4-autoencoder_zscore_relu_linear_bce_loss.png) | ![BCE Samples](./images/4-autoencoder_zscore_relu_linear_bce_samples.png) |
+| MSE | ![MSE Model](./images/4-autoencoder_zscore_relu_linear_mse.png) | ![MSE Loss](./images/4-autoencoder_zscore_relu_linear_mse_loss.png) | ![MSE Samples](./images/4-autoencoder_zscore_relu_linear_mse_samples.png) |
