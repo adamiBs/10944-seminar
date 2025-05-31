@@ -4,6 +4,8 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import load_wine
 from utils.common import visualize_3d_scatter
+# Import our evaluation utilities
+from utils.evaluation import evaluate_dimensionality_reduction
 
 # Load wine dataset
 wine = load_wine()
@@ -26,6 +28,39 @@ data_pca_normalized = pca_normalized.fit_transform(data_normalized)
 print("WITH Z-SCORE NORMALIZATION:")
 print(f"Explained variance ratio: {pca_normalized.explained_variance_ratio_}")
 print(f"Total explained variance: {sum(pca_normalized.explained_variance_ratio_):.4f}")
+
+# Evaluate the normalized PCA dimensionality reduction
+metrics_normalized = evaluate_dimensionality_reduction(
+    X=data_normalized,
+    X_reduced=data_pca_normalized,
+    y=target,
+    n_neighbors=10
+)
+
+# Print the evaluation metrics for normalized data
+print("\nDimensionality Reduction Quality Metrics (Z-score Normalized):")
+print("-----------------------------------------")
+for metric_name, metric_value in metrics_normalized.items():
+    print(f"{metric_name}: {metric_value:.6f}")
+
+# Save normalized PCA metrics to a text file
+metrics_path_normalized = '/workspaces/10944-seminar/images/3-1-zscore_pca_wine_metrics.txt'
+with open(metrics_path_normalized, 'w') as f:
+    f.write("Dimensionality Reduction Quality Metrics (Z-score Normalized):\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics_normalized.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
+
+# Create a bar plot of the metrics for normalized data
+plt.figure(figsize=(10, 6))
+plt.bar(metrics_normalized.keys(), metrics_normalized.values())
+plt.title('PCA with Z-score Normalization - Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/3-1-zscore_pca_wine_metrics.png', dpi=300)
+plt.close()
 
 # Create a 2D visualization for normalized data
 plt.figure(figsize=(10, 8))
@@ -56,6 +91,39 @@ data_pca_raw = pca_raw.fit_transform(data)
 print("\nWITHOUT Z-SCORE NORMALIZATION:")
 print(f"Explained variance ratio: {pca_raw.explained_variance_ratio_}")
 print(f"Total explained variance: {sum(pca_raw.explained_variance_ratio_):.4f}")
+
+# Evaluate the raw PCA dimensionality reduction
+metrics_raw = evaluate_dimensionality_reduction(
+    X=data,
+    X_reduced=data_pca_raw,
+    y=target,
+    n_neighbors=10
+)
+
+# Print the evaluation metrics for raw data
+print("\nDimensionality Reduction Quality Metrics (Raw Data):")
+print("-----------------------------------------")
+for metric_name, metric_value in metrics_raw.items():
+    print(f"{metric_name}: {metric_value:.6f}")
+
+# Save raw PCA metrics to a text file
+metrics_path_raw = '/workspaces/10944-seminar/images/3-1-raw_pca_wine_metrics.txt'
+with open(metrics_path_raw, 'w') as f:
+    f.write("Dimensionality Reduction Quality Metrics (Raw Data):\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics_raw.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
+
+# Create a bar plot of the metrics for raw data
+plt.figure(figsize=(10, 6))
+plt.bar(metrics_raw.keys(), metrics_raw.values())
+plt.title('PCA without Normalization - Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/3-1-raw_pca_wine_metrics.png', dpi=300)
+plt.close()
 
 # Create a 2D visualization for raw data
 plt.figure(figsize=(10, 8))
@@ -97,3 +165,7 @@ visualize_3d_scatter(
     save_path=output_path_raw,
     features_to_use=[0, 1, 2]
 )
+
+print(f"Script execution completed. Output images and metrics saved in the /workspaces/10944-seminar/images/ directory.")
+print(f"Z-score normalized PCA metrics saved to {metrics_path_normalized}")
+print(f"Raw PCA metrics saved to {metrics_path_raw}")

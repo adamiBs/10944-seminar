@@ -1,0 +1,6 @@
+Original t-SNE Dimensionality Reduction Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.988550
+continuity: 0.983321
+knn_preservation: 0.718000
+silhouette_score: 0.643141

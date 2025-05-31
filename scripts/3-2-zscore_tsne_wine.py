@@ -5,6 +5,8 @@ from sklearn.manifold import TSNE
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import load_wine
 from utils.common import visualize_3d_scatter
+# Import our evaluation utilities
+from utils.evaluation import evaluate_dimensionality_reduction
 
 # Load wine dataset
 wine = load_wine()
@@ -23,10 +25,40 @@ data_normalized = scaler.fit_transform(data)
 pca_normalized = PCA(n_components=2)
 data_pca_normalized = pca_normalized.fit_transform(data_normalized)
 
+# Evaluate PCA with Z-score normalization
+metrics_pca_normalized = evaluate_dimensionality_reduction(
+    X=data_normalized,
+    X_reduced=data_pca_normalized,
+    y=target,
+    n_neighbors=10
+)
+
+# Save PCA Z-score metrics to a text file
+metrics_path_pca_norm = '/workspaces/10944-seminar/images/3-2-zscore_pca_wine_metrics.txt'
+with open(metrics_path_pca_norm, 'w') as f:
+    f.write("PCA with Z-score Normalization - Quality Metrics:\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics_pca_normalized.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
+
+# Create a bar plot of the PCA Z-score metrics
+plt.figure(figsize=(10, 6))
+plt.bar(metrics_pca_normalized.keys(), metrics_pca_normalized.values())
+plt.title('PCA with Z-score Normalization - Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/3-2-zscore_pca_wine_metrics.png', dpi=300)
+plt.close()
+
 # Print explained variance ratio (normalized data)
 print("WITH Z-SCORE NORMALIZATION:")
 print(f"Explained variance ratio: {pca_normalized.explained_variance_ratio_}")
 print(f"Total explained variance: {sum(pca_normalized.explained_variance_ratio_):.4f}")
+print("\nPCA with Z-score normalization quality metrics:")
+for metric_name, metric_value in metrics_pca_normalized.items():
+    print(f"{metric_name}: {metric_value:.6f}")
 
 # Create a 2D visualization for normalized data
 plt.figure(figsize=(10, 8))
@@ -51,8 +83,38 @@ plt.close()
 tsne_normalized = TSNE(n_components=2, random_state=42)
 data_tsne_normalized = tsne_normalized.fit_transform(data_normalized)
 
+# Evaluate t-SNE with Z-score normalization
+metrics_tsne_normalized = evaluate_dimensionality_reduction(
+    X=data_normalized,
+    X_reduced=data_tsne_normalized,
+    y=target,
+    n_neighbors=10
+)
+
+# Save t-SNE Z-score metrics to a text file
+metrics_path_tsne_norm = '/workspaces/10944-seminar/images/3-2-zscore_tsne_wine_metrics.txt'
+with open(metrics_path_tsne_norm, 'w') as f:
+    f.write("t-SNE with Z-score Normalization - Quality Metrics:\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics_tsne_normalized.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
+
+# Create a bar plot of the t-SNE Z-score metrics
+plt.figure(figsize=(10, 6))
+plt.bar(metrics_tsne_normalized.keys(), metrics_tsne_normalized.values())
+plt.title('t-SNE with Z-score Normalization - Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/3-2-zscore_tsne_wine_metrics.png', dpi=300)
+plt.close()
+
 print("WITH Z-SCORE NORMALIZATION:")
 print("t-SNE applied to normalized data")
+print("\nt-SNE with Z-score normalization quality metrics:")
+for metric_name, metric_value in metrics_tsne_normalized.items():
+    print(f"{metric_name}: {metric_value:.6f}")
 
 # Create a 2D visualization for normalized data
 plt.figure(figsize=(10, 8))
@@ -78,10 +140,40 @@ plt.close()
 pca_raw = PCA(n_components=2)
 data_pca_raw = pca_raw.fit_transform(data)
 
+# Evaluate PCA with raw data
+metrics_pca_raw = evaluate_dimensionality_reduction(
+    X=data,
+    X_reduced=data_pca_raw,
+    y=target,
+    n_neighbors=10
+)
+
+# Save PCA raw metrics to a text file
+metrics_path_pca_raw = '/workspaces/10944-seminar/images/3-2-raw_pca_wine_metrics.txt'
+with open(metrics_path_pca_raw, 'w') as f:
+    f.write("PCA without Normalization - Quality Metrics:\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics_pca_raw.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
+
+# Create a bar plot of the PCA raw metrics
+plt.figure(figsize=(10, 6))
+plt.bar(metrics_pca_raw.keys(), metrics_pca_raw.values())
+plt.title('PCA without Normalization - Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/3-2-raw_pca_wine_metrics.png', dpi=300)
+plt.close()
+
 # Print explained variance ratio (raw data)
 print("\nWITHOUT Z-SCORE NORMALIZATION:")
 print(f"Explained variance ratio: {pca_raw.explained_variance_ratio_}")
 print(f"Total explained variance: {sum(pca_raw.explained_variance_ratio_):.4f}")
+print("\nPCA with raw data quality metrics:")
+for metric_name, metric_value in metrics_pca_raw.items():
+    print(f"{metric_name}: {metric_value:.6f}")
 
 # Create a 2D visualization for raw data
 plt.figure(figsize=(10, 8))
@@ -105,8 +197,38 @@ plt.close()
 tsne_raw = TSNE(n_components=2, random_state=42)
 data_tsne_raw = tsne_raw.fit_transform(data)
 
+# Evaluate t-SNE with raw data
+metrics_tsne_raw = evaluate_dimensionality_reduction(
+    X=data,
+    X_reduced=data_tsne_raw,
+    y=target,
+    n_neighbors=10
+)
+
+# Save t-SNE raw metrics to a text file
+metrics_path_tsne_raw = '/workspaces/10944-seminar/images/3-2-raw_tsne_wine_metrics.txt'
+with open(metrics_path_tsne_raw, 'w') as f:
+    f.write("t-SNE without Normalization - Quality Metrics:\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics_tsne_raw.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
+
+# Create a bar plot of the t-SNE raw metrics
+plt.figure(figsize=(10, 6))
+plt.bar(metrics_tsne_raw.keys(), metrics_tsne_raw.values())
+plt.title('t-SNE without Normalization - Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/3-2-raw_tsne_wine_metrics.png', dpi=300)
+plt.close()
+
 print("\nWITHOUT Z-SCORE NORMALIZATION:")
 print("t-SNE applied to raw data")
+print("\nt-SNE with raw data quality metrics:")
+for metric_name, metric_value in metrics_tsne_raw.items():
+    print(f"{metric_name}: {metric_value:.6f}")
 
 # Create a 2D visualization for raw data
 plt.figure(figsize=(10, 8))
@@ -170,3 +292,31 @@ visualize_3d_scatter(
     save_path=output_path_raw_tsne,
     features_to_use=[0, 1, 2]
 )
+
+# Create a comparative bar chart for all four methods
+plt.figure(figsize=(15, 8))
+
+methods = ['PCA+Z-score', 't-SNE+Z-score', 'PCA+Raw', 't-SNE+Raw']
+metrics_dicts = [metrics_pca_normalized, metrics_tsne_normalized, metrics_pca_raw, metrics_tsne_raw]
+metric_names = list(metrics_pca_normalized.keys())
+
+# Create a grouped bar chart for each metric
+n_groups = len(methods)
+n_metrics = len(metric_names)
+bar_width = 0.2
+index = np.arange(n_groups)
+
+for i, metric in enumerate(metric_names):
+    values = [metrics_dict[metric] for metrics_dict in metrics_dicts]
+    plt.bar(index + i*bar_width, values, bar_width, label=metric)
+
+plt.xlabel('Method')
+plt.ylabel('Score')
+plt.title('Comparison of Quality Metrics Across Methods')
+plt.xticks(index + bar_width * (n_metrics/2 - 0.5), methods)
+plt.legend(loc='best')
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/3-2-wine_methods_comparison.png', dpi=300)
+plt.close()
+
+print(f"Script execution completed. Output images and metrics saved in the /workspaces/10944-seminar/images/ directory.")

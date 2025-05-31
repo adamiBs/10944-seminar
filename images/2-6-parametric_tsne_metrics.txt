@@ -1,0 +1,6 @@
+Parametric t-SNE Dimensionality Reduction Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.894900
+continuity: 0.922151
+knn_preservation: 0.354667
+silhouette_score: 0.728866

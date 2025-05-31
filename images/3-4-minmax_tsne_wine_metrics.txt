@@ -1,0 +1,6 @@
+t-SNE with MinMax Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.946970
+continuity: 0.939817
+knn_preservation: 0.560112
+silhouette_score: 0.567585

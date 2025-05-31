@@ -1,0 +1,6 @@
+t-SNE without Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 1.000418
+continuity: 0.999395
+knn_preservation: 0.866292
+silhouette_score: 0.258402

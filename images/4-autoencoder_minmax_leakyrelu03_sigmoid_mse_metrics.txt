@@ -1,0 +1,7 @@
+Dimensionality Reduction Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.925741
+continuity: 0.940588
+knn_preservation: 0.386111
+silhouette_score: 0.206675
+reconstruction_error: 0.034418

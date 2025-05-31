@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
 from utils.common import load_iris_dataset, visualize_3d_scatter
+# Import our evaluation utilities
+from utils.evaluation import evaluate_dimensionality_reduction
 
 # Load iris dataset
 data, feature_names, target = load_iris_dataset()
@@ -86,6 +88,59 @@ for epoch in range(epochs):
 embeddings, _ = model(tf.convert_to_tensor(data_scaled, dtype=tf.float32))
 data_contrastive = embeddings.numpy()
 
+# Evaluate the dimensionality reduction using our metrics
+metrics = evaluate_dimensionality_reduction(
+    X=data_scaled,
+    X_reduced=data_contrastive,
+    y=target,
+    n_neighbors=10
+)
+
+# Print the evaluation metrics
+print("\nDimensionality Reduction Quality Metrics:")
+print("-----------------------------------------")
+for metric_name, metric_value in metrics.items():
+    print(f"{metric_name}: {metric_value:.6f}")
+
+# Save metrics to a text file
+metrics_path = '/workspaces/10944-seminar/images/2-5-contrastive_metrics.txt'
+with open(metrics_path, 'w') as f:
+    f.write("Dimensionality Reduction Quality Metrics:\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
+
+# Create a bar plot of the metrics
+plt.figure(figsize=(10, 6))
+plt.bar(metrics.keys(), metrics.values())
+plt.title('Contrastive Learning - Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/2-5-contrastive_metrics.png', dpi=300)
+plt.close()
+
+# Create a 2D visualization
+plt.figure(figsize=(10, 8))
+colors = ['navy', 'turquoise', 'darkorange']
+target_names = ['Setosa', 'Versicolor', 'Virginica']
+
+for color, i, target_name in zip(colors, [0, 1, 2], target_names):
+    plt.scatter(data_contrastive[target == i, 0], data_contrastive[target == i, 1],
+                color=color, lw=2, label=target_name)
+
+plt.xlabel('Contrastive Dimension 1')
+plt.ylabel('Contrastive Dimension 2')
+plt.title('Contrastive Learning - Iris Dataset (2D Visualization)')
+plt.legend(loc='best')
+plt.grid(True)
+
+# Save the 2D visualization
+output_path_2d = "/workspaces/10944-seminar/images/2-5-contrastive_reduction_2d.png"
+plt.savefig(output_path_2d)
+plt.close()
+
 # Add zero column for 3D visualization
 data_contrastive_3d = np.column_stack((data_contrastive, np.zeros(len(data_contrastive))))
 
@@ -98,3 +153,6 @@ visualize_3d_scatter(
     save_path=output_path,
     features_to_use=[0, 1, 2]
 )
+
+print(f"Script execution completed. Output images saved in the /workspaces/10944-seminar/images/ directory.")
+print(f"Evaluation metrics saved to {metrics_path}")

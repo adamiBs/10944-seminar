@@ -1,0 +1,6 @@
+UMAP without Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.998206
+continuity: 0.995627
+knn_preservation: 0.768539
+silhouette_score: 0.255598

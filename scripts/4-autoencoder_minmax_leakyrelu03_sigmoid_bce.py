@@ -10,6 +10,9 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 import os
 
+# Import our new evaluation utilities
+from utils.evaluation import evaluate_dimensionality_reduction
+
 # Set random seeds for reproducibility
 np.random.seed(42)
 tf.random.set_seed(42)
@@ -128,10 +131,44 @@ plt.tight_layout()
 plt.savefig('/workspaces/10944-seminar/images/4-autoencoder_minmax_leakyrelu03_sigmoid_bce.png', dpi=300)
 plt.close()
 
-# Compute reconstruction loss on test set (using MSE for consistent comparison)
+# Compute reconstructions
 reconstructed = autoencoder.predict(X_test_normalized)
 mse = np.mean(np.square(X_test_normalized - reconstructed))
 print(f"Test reconstruction MSE: {mse:.6f}")
+
+# Evaluate the dimensionality reduction using our new metrics
+metrics = evaluate_dimensionality_reduction(
+    X=X_test_normalized,
+    X_reduced=latent_embeddings,
+    y=y_test,
+    X_reconstructed=reconstructed,
+    n_neighbors=10
+)
+
+# Print the evaluation metrics
+print("\nDimensionality Reduction Quality Metrics:")
+print("-----------------------------------------")
+for metric_name, metric_value in metrics.items():
+    print(f"{metric_name}: {metric_value:.6f}")
+
+# Save metrics to a text file
+metrics_path = '/workspaces/10944-seminar/images/4-autoencoder_minmax_leakyrelu03_sigmoid_bce_metrics.txt'
+with open(metrics_path, 'w') as f:
+    f.write("Dimensionality Reduction Quality Metrics:\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
+
+# Create a bar plot of the metrics
+plt.figure(figsize=(10, 6))
+plt.bar(metrics.keys(), metrics.values())
+plt.title('Dimensionality Reduction Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/4-autoencoder_minmax_leakyrelu03_sigmoid_bce_metrics.png', dpi=300)
+plt.close()
 
 # Visualize some reconstructed digits
 n_samples = 10
@@ -160,6 +197,7 @@ plt.savefig('/workspaces/10944-seminar/images/4-autoencoder_minmax_leakyrelu03_s
 plt.close()
 
 print("Script execution completed. Output images saved in the /workspaces/10944-seminar/images/ directory.")
+print(f"Evaluation metrics saved to {metrics_path}")
 
 """
 Comments on performance implications:
@@ -184,4 +222,11 @@ Comments on performance implications:
    - Well-structured latent space with good digit class separation
    - Faster convergence due to the statistical alignment of all components
    - Should be among the best performing configurations for MinMax data
+   
+5. Dimensionality Reduction Quality Metrics:
+   - Trustworthiness: Measures how well local structures are preserved
+   - Continuity: Measures how well original neighborhoods are reconstructed
+   - KNN Preservation: Shows how many nearest neighbors are preserved 
+   - Silhouette Score: Evaluates how well-separated the clusters are
+   - Reconstruction Error: Measures fidelity of input reconstruction (MSE)
 """

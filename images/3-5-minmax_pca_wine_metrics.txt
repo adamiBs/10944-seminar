@@ -1,0 +1,6 @@
+PCA with MinMax Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.896484
+continuity: 0.929818
+knn_preservation: 0.349438
+silhouette_score: 0.539676

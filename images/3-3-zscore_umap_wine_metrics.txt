@@ -1,0 +1,6 @@
+UMAP with Z-score Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.947395
+continuity: 0.938517
+knn_preservation: 0.486517
+silhouette_score: 0.597910

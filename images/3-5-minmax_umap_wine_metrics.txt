@@ -1,0 +1,6 @@
+UMAP with MinMax Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.952467
+continuity: 0.944007
+knn_preservation: 0.511236
+silhouette_score: 0.622651

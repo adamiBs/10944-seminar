@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from utils.common import load_iris_dataset, visualize_3d_scatter
+# Import our evaluation utilities
+from utils.evaluation import evaluate_dimensionality_reduction
 
 # Load iris dataset
 data, feature_names, target = load_iris_dataset()
@@ -13,6 +15,28 @@ data_pca = pca.fit_transform(data)
 # Print explained variance ratio
 print(f"Explained variance ratio: {pca.explained_variance_ratio_}")
 print(f"Total explained variance: {sum(pca.explained_variance_ratio_):.4f}")
+
+# Evaluate the dimensionality reduction using our metrics
+metrics = evaluate_dimensionality_reduction(
+    X=data,
+    X_reduced=data_pca,
+    y=target,
+    n_neighbors=10
+)
+
+# Print the evaluation metrics
+print("\nDimensionality Reduction Quality Metrics:")
+print("-----------------------------------------")
+for metric_name, metric_value in metrics.items():
+    print(f"{metric_name}: {metric_value:.6f}")
+
+# Save metrics to a text file
+metrics_path = '/workspaces/10944-seminar/images/2-1-pca_metrics.txt'
+with open(metrics_path, 'w') as f:
+    f.write("Dimensionality Reduction Quality Metrics:\n")
+    f.write("-----------------------------------------\n")
+    for metric_name, metric_value in metrics.items():
+        f.write(f"{metric_name}: {metric_value:.6f}\n")
 
 # Create a 2D visualization
 plt.figure(figsize=(10, 8))
@@ -34,6 +58,17 @@ output_path_2d = "/workspaces/10944-seminar/images/2-1-pca_reduction_2d.png"
 plt.savefig(output_path_2d)
 plt.close()
 
+# Create a bar plot of the metrics
+plt.figure(figsize=(10, 6))
+plt.bar(metrics.keys(), metrics.values())
+plt.title('PCA Dimensionality Reduction Quality Metrics')
+plt.xlabel('Metric')
+plt.ylabel('Score')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('/workspaces/10944-seminar/images/2-1-pca_metrics.png', dpi=300)
+plt.close()
+
 # Add zero column for 3D visualization
 data_pca_3d = np.column_stack((data_pca, np.zeros(len(data_pca))))
 
@@ -46,3 +81,6 @@ visualize_3d_scatter(
     save_path=output_path,
     features_to_use=[0, 1, 2]  # Use all 3 dimensions for plotting
 )
+
+print(f"Script execution completed. Output images saved in the /workspaces/10944-seminar/images/ directory.")
+print(f"Evaluation metrics saved to {metrics_path}")

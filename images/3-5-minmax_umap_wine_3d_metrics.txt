@@ -1,0 +1,6 @@
+UMAP 3D with MinMax Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.955488
+continuity: 0.947748
+knn_preservation: 0.538202
+silhouette_score: 0.626048

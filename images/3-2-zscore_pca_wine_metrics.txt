@@ -1,0 +1,6 @@
+PCA with Z-score Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.882147
+continuity: 0.924598
+knn_preservation: 0.333708
+silhouette_score: 0.526154

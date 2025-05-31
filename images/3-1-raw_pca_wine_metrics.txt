@@ -1,0 +1,6 @@
+Dimensionality Reduction Quality Metrics (Raw Data):
+-----------------------------------------
+trustworthiness: 1.000131
+continuity: 1.000225
+knn_preservation: 0.978652
+silhouette_score: 0.199767

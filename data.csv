@@ -1,0 +1,22 @@
+method	normalization	activation_function	output_activation	loss_function	trustworthiness	continuity	knn_preservation	silhouette_score	reconstruction_error
+PCA	Raw	None	None	None	1.000131	1.000225	0.978652	0.199767	
+PCA	Z-score	None	None	None	0.882147	0.924598	0.333708	0.526154	
+PCA	Raw	None	None	None	1.000131	1.000225	0.978652	0.199767	
+t-SNE	Raw	None	None	None	1.000418	0.999395	0.866292	0.258402	
+PCA	Z-score	None	None	None	0.882147	0.924598	0.333708	0.526154	
+t-SNE	Z-score	None	None	None	0.937805	0.935084	0.542135	0.552038	
+PCA	Raw	None	None	None	1.000131	1.000225	0.978652	0.199767	
+UMAP	Raw	None	None	None	0.998206	0.995627	0.768539	0.255598	
+PCA	Z-score	None	None	None	0.882147	0.924598	0.333708	0.526154	
+UMAP	Z-score	None	None	None	0.947395	0.938517	0.486517	0.59791	
+PCA	MinMax	None	None	None	0.896484	0.929818	0.349438	0.539676	
+t-SNE	MinMax	None	None	None	0.94697	0.939817	0.560112	0.567585	
+UMAP	MinMax	None	None	None	0.952467	0.944007	0.511236	0.622651	
+Autoencoder	MinMax	LeakyReLU	Sigmoid	BCE	0.903212	0.933662	0.345	0.179886	0.035884
+Autoencoder	MinMax	LeakyReLU	Sigmoid	MSE	0.925741	0.940588	0.386111	0.206675	0.034418
+Autoencoder	MinMax	ReLU	Sigmoid	MSE	0.925386	0.933915	0.382778	0.172705	0.034307
+Autoencoder	MinMax	ReLU	Sigmoid	BCE	0.929287	0.941698	0.393889	0.187913	0.032521
+Autoencoder	Z-score	LeakyReLU	Linear	BCE	0.772754	0.861938	0.189722	-0.020763	1.105469
+Autoencoder	Z-score	LeakyReLU	Linear	MSE	0.880905	0.921416	0.341389	0.158378	0.448613
+Autoencoder	Z-score	ReLU	Linear	BCE	0.794355	0.875155	0.229722	0.04621	1.400133
+Autoencoder	Z-score	ReLU	Linear	MSE	0.902367	0.922869	0.358611	0.168218	0.430609

@@ -1,0 +1,6 @@
+t-SNE with Z-score Normalization - Quality Metrics:
+-----------------------------------------
+trustworthiness: 0.937805
+continuity: 0.935084
+knn_preservation: 0.542135
+silhouette_score: 0.552038
